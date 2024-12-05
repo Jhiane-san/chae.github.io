@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Varela+Round');
+        @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+        html, body {
+            overflow-x: hidden;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: "Varela Round", sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        #backgroundVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 5;
+            filter: brightness(0.5);
+        }
+
+        .header {
+            width: 100%;
+            background: linear-gradient(90deg, #2E3192, #1BFFFF);
+            position: fixed;
+            height: 60px;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .main {
+            display: block;
+            height: 100%;
+            margin-top: 60px;
+        }
+
+        .mainInner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        
+        #sidebarMenu {
+            height: 100%;
+            position: fixed;
+            left: 0;
+            width: 250px;
+            margin-top: 60px;
+            transform: translateX(-100%);
+            transition: transform 250ms ease-in-out;
+            background: #333;
+            box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 15;
+            background-color: royalblue;
+            animation-name: example;
+            animation-duration: 15s;
+            text-align: center;
+        }
+        
+         
+@keyframes example {
+  0%   {background-color: orchid purple;}
+  25%  {background-color: Midnightblue;}
+  50%  {background-color: darkblue;}
+  100% {background-color: royalblue;}
+}
+
+        .sidebarMenuInner {
+            margin: 0;
+            padding: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebarMenuInner li {
+            list-style: none;
+            color: #ccc;
+            font-size: 1.2em;
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebarMenuInner li:hover {
+            background-color: #444;
+        }
+
+        .sidebarMenuInner li span {
+            font-size: 0.9em;
+            font-weight: 300;
+            color: #bbb;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .sidebarMenuInner li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            
+        }
+
+        .sidebarMenuInner li:hover a {
+            color: #fff;
+        }
+
+        input[type="checkbox"]:checked ~ #sidebarMenu {
+            transform: translateX(0);
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .sidebarIconToggle {
+            cursor: pointer;
+            position: absolute;
+            top: 22px;
+            left: 15px;
+            width: 22px;
+            height: 22px;
+            z-index: 99;
+        }
+
+        .sidebarIconToggle .spinner {
+            height: 4px;
+            background-color: #fff;
+            margin: 4px 0;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* Loading Overlay */
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #FF416C;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .content h4 {
+            color: #fff;
+            font-size: 3em;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .content h4:nth-child(1) {
+            color: transparent;
+            -webkit-text-stroke: 1px #FF416C;
+        }
+
+        .content h4:nth-child(2) {
+            color: #FF4B2B;
+            animation: animateText 4s ease-in-out infinite;
+        }
+
+        @keyframes animateText {
+            0%, 100% {
+                clip-path: polygon(0% 45%, 16% 44%, 33% 50%, 54% 60%, 70% 61%, 84% 59%, 100% 52%, 100% 100%, 0% 100%);
+            }
+            50% {
+                clip-path: polygon(0% 60%, 15% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%);
+            }
+        }
+
+        .profile-image {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+        function showLoadingAndNavigate(url) {
+            document.getElementById("loadingOverlay").style.display = "flex";
+            setTimeout(function() {
+                window.location.href = url;
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+    
+    <video id="backgroundVideo" autoplay muted loop>
+        <source src="123.mp4" type="video/mp4">
+    </video>
+
+    <div class="header"></div>
+    <input type="checkbox" class="opensidebarMenu" id="opensidebarMenu">
+    <label for="opensidebarMenu" class="sidebarIconToggle">
+        <div class="spinner diagonal part-1"></div>
+        <div class="spinner diagonal part-2"></div>
+        <div class="spinner horizontal"></div>
+    </label>
+    <div id="sidebarMenu">
+        <ul class="sidebarMenuInner">
+            <li>
+                <!-- Small image added to the left of Jhiane Penanueva -->
+                <a href="javascript:void(0)" onclick="showLoadingAndNavigate('Profile.html')">
+                    <img src="Jhiane.jpg" alt="Profile Image" class="profile-image"> Jhiane Penanueva
+                </a>
+                <span>Web Developer</span>
+            </li>
+            <li><a href="javascript:void(0)" onclick="showLoadingAndNavigate('...html')">Lupang Hinirang</a></li>
+            <li><a href="javascript:void(0)" onclick="showLoadingAndNavigate('Kristine.html')">Bagyo Kristine</a></li>
+              <li><a href="javascript:void(0)" onclick="showLoadingAndNavigate('bodyparts.html')">Body Parts</a></li>
+             <li><a href="javascript:void(0)" onclick="showLoadingAndNavigate('Buttons.html')">Buttons</a></li>
+             <li><a href="javascript:void(0)" onclick="showLoadingAndNavigate('Pagination.html')">Pagination</a></li>
+            <li><a href="javascript:void(0)" onclick="showLoadingAndNavigate('Gwen.html')">Gwen</a></li>
+            <li><a href="https://www.facebook.com/jhianechae.penanueva.1?mibextid=ZbWKwL" target="_blank">Facebook</a></li>
+        </ul>
+    </div>
+    <div class="main">
+        <div class="mainInner">
+            <!-- Centered Animation Content -->
+            <div class="content">
+                <h4>Programming is thinking, not typing</h4>
+                <h4>Programming is thinking, not typing</h4>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+</body>
+</html>
